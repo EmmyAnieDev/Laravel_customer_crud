@@ -57,9 +57,9 @@
                         <td> {{ $customer->email }} </td>
                         <td> {{ $customer->bank_account_number }} </td>
                         <td>
-                            <a href="" style="color: #2c2c2c;" class="ms-1 me-1"><i class="far fa-edit"></i></a>
+                            <a href=" {{ route('customers.edit', $customer->id ) }} " style="color: #2c2c2c;" class="ms-1 me-1"><i class="far fa-edit"></i></a>
                             <a href="/customer-details.html" style="color: #2c2c2c;" class="ms-1 me-1"><i class="far fa-eye"></i></a>
-                            <a href="" style="color: #2c2c2c;" class="ms-1 me-1"><i class="fas fa-trash-alt"></i></a>
+                            <a href=" {{ route('customers.destroy', $customer->id ) }} " style="color: #2c2c2c;" class="ms-1 me-1"><i class="fas fa-trash-alt"></i></a>
                         </td>
                       </tr>
                       @endforeach

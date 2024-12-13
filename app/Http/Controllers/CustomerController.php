@@ -51,7 +51,7 @@ class CustomerController extends Controller
 
         $customer->save();
 
-        return redirect()->route('home');
+        return redirect()->route('customers.index');
     }
 
     /**
@@ -67,13 +67,15 @@ class CustomerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+
+        return view('customer.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CustomerStoreRequest $request, string $id)
     {
         //
     }
