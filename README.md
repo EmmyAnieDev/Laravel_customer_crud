@@ -9,3 +9,7 @@
 *   edit: Show the form for editing the specified resource.
 *   update: Update the specified resource in storage.
 *   destroy: Remove the specified resource from storage.
+
+## FORM CSRF
+
+-   Since Form automatcially uses GET method. (@csrf) is not neccessary.

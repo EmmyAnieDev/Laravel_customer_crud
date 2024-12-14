@@ -13,9 +13,9 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
+        $customers = Customer::orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get();  // Order by descending (latest ID).
 
         return view('customer.index', compact('customers'));
     }
@@ -127,7 +127,7 @@ class CustomerController extends Controller
         $customers = Customer::where('first_name', 'LIKE', '%' . $param . '%')
                      ->orWhere('last_name', 'LIKE', '%' . $param . '%')
                      ->orWhere('email', 'LIKE', '%' . $param . '%')
-                     ->get();
+                     ->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get();  // Order by descending (latest ID).
 
         return view('customer.index', compact('customers'));
     }
