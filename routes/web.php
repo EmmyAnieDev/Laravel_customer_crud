@@ -9,5 +9,6 @@ Route::get('/', function () {
 
 
 Route::get('customers/search', [CustomerController::class, 'search'])->name('customers.search');
+Route::get('customers/trash', [CustomerController::class, 'trash'])->name('customers.trash');
 Route::resource('customers', CustomerController::class);
 

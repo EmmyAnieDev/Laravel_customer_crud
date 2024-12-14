@@ -131,4 +131,11 @@ class CustomerController extends Controller
 
         return view('customer.index', compact('customers'));
     }
+
+    public function trash(Request $request)
+    {
+        $customers = Customer::orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get();  // Order by descending (latest ID).
+
+        return view('customer.trash', compact('customers'));
+    }
 }
