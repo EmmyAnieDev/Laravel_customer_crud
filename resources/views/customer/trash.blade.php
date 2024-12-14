@@ -12,7 +12,7 @@
                     <div class="col-md-2">
                         <a href=" {{ route('customers.index') }} " class="btn" style="background-color: #4643d3; color: white;"><i class="fas fa-chevron-left"></i> Back</a>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <form action=" {{ route('customers.search') }} ">
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Search anything..." aria-describedby="button-addon2" name="search" value=" {{ request()->search }} ">
@@ -30,9 +30,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-2 text-end">
-                        <a href=" {{ route('customers.create') }} " class="btn btn-dark" ><i class="fas fa-trash-alt"></i> Trash</a>
-                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -42,7 +39,6 @@
                         <th scope="col">#</th>
                         <th scope="col">First Name</th>
                         <th scope="col">Last Name</th>
-                        <th scope="col">Date of Birth</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Email</th>
                         <th scope="col">BAN</th>
@@ -60,10 +56,9 @@
                         <td> {{ $customer->email }} </td>
                         <td> {{ $customer->bank_account_number }} </td>
                         <td>
-                            <a href=" {{ route('customers.edit', $customer->id ) }} " style="color: #2c2c2c;" class="ms-1 me-1"><i class="far fa-edit"></i></a>
-                            <a href=" {{ route('customers.show', $customer->id ) }} " style="color: #2c2c2c;" class="ms-1 me-1"><i class="far fa-eye"></i></a>
+                            <a href=" {{ route('customers.restore', $customer->id ) }} " style="color: #2c2c2c;" class="ms-1 me-1"><i class="fas fa-redo"></i></a>
                             <a href="javascript:;" onclick=" if(confirm('Are you sure you want to delete?')) $('.form-{{ $customer->id }}').submit()" style="color: #2c2c2c;" class="ms-1 me-1"><i class="fas fa-trash-alt"></i></a>
-                            <form class=" form-{{ $customer->id }} " action=" {{ route('customers.destroy', $customer->id ) }} " method="POST">
+                            <form class=" form-{{ $customer->id }} " action=" {{ route('customers.force_destroy', $customer->id ) }} " method="POST">
                                 @csrf
                                 @method('DELETE')
                             </form>

@@ -113,9 +113,7 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
 
-        File::delete(public_path($customer->image));
-
-        $customer->delete();
+        $customer->delete(); // This will now soft delete the customer due to the SoftDeletes trait in the model.
 
         return redirect()->route('customers.index');
     }
@@ -127,15 +125,41 @@ class CustomerController extends Controller
         $customers = Customer::where('first_name', 'LIKE', '%' . $param . '%')
                      ->orWhere('last_name', 'LIKE', '%' . $param . '%')
                      ->orWhere('email', 'LIKE', '%' . $param . '%')
-                     ->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get();  // Order by descending (latest ID).
+                     ->orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get(); 
 
         return view('customer.index', compact('customers'));
     }
 
     public function trash(Request $request)
     {
-        $customers = Customer::orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->get();  // Order by descending (latest ID).
+        $customers = Customer::orderBy('id', $request->has('order') && $request->order == 'asc' ? 'ASC' : 'DESC')->onlyTrashed()->get();  
 
         return view('customer.trash', compact('customers'));
+    }
+
+    /**
+     * Restore specified resource from trash to index
+     */
+    public function restore(string $id)
+    {
+        $customer = Customer::onlyTrashed()->findOrFail($id);
+
+        $customer->restore();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Force delete specified resource from trash
+     */
+    public function forceDestroy(string $id)
+    {
+        $customer = Customer::onlyTrashed()->findOrFail($id);
+
+        File::delete(public_path($customer->image));
+
+        $customer->forceDelete();
+
+        return redirect()->back();
     }
 }
