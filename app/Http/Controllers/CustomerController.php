@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\CustomerStoreRequest;
 use App\Models\Customer;
 use Illuminate\Support\Facades\File;
+
 
 class CustomerController extends Controller
 {
@@ -116,5 +118,17 @@ class CustomerController extends Controller
         $customer->delete();
 
         return redirect()->route('customers.index');
+    }
+
+    public function search(Request $request)
+    {
+        $param = $request->search;
+
+        $customers = Customer::where('first_name', 'LIKE', '%' . $param . '%')
+                     ->orWhere('last_name', 'LIKE', '%' . $param . '%')
+                     ->orWhere('email', 'LIKE', '%' . $param . '%')
+                     ->get();
+
+        return view('customer.index', compact('customers'));
     }
 }

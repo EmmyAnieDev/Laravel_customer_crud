@@ -7,5 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+
+Route::get('customers/search', [CustomerController::class, 'search'])->name('customers.search');
 Route::resource('customers', CustomerController::class);
 
